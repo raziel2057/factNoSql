@@ -33,6 +33,7 @@ public class RegistroFacturaBean implements Serializable{
     private List<Producto> productos;
     private String codigoProducto;
     private List<DetalleFactura> detalle;
+    private float totalFactura;
 
     public String getCedula() {
         return cedula;
@@ -74,6 +75,14 @@ public class RegistroFacturaBean implements Serializable{
     public void setDetalle(List<DetalleFactura> detalle) {
         this.detalle = detalle;
     }
+
+    public float getTotalFactura() {
+        return totalFactura;
+    }
+
+    public void setTotalFactura(float totalFactura) {
+        this.totalFactura = totalFactura;
+    }
     
     
     
@@ -85,6 +94,7 @@ public class RegistroFacturaBean implements Serializable{
         this.facturaServicio = new FacturaServicio();
         detalle=new ArrayList<>();
         this.cargarProductos();
+        this.totalFactura=0;
         //this.persona=new Persona();
     }
     
@@ -108,6 +118,7 @@ public class RegistroFacturaBean implements Serializable{
             {
                 flag=false;
                 this.detalle.get(i).setCantidad(this.detalle.get(i).getCantidad()+1);
+                this.totalFactura+=this.detalle.get(i).getProducto().getPrecio();
                 break;
             }
         }
@@ -118,6 +129,7 @@ public class RegistroFacturaBean implements Serializable{
                 if(p.getCodigo().equals(this.codigoProducto))
                 {
                     this.detalle.add(new DetalleFactura(p, 1));
+                    this.totalFactura+=p.getPrecio();
                     break;
                 }
             }
@@ -127,6 +139,15 @@ public class RegistroFacturaBean implements Serializable{
     public void guardarFactura()
     {
         this.facturaServicio.guardarFactura(detalle, persona);
+        this.reset();
+    }
+    
+    public void reset()
+    {
+        this.detalle = new ArrayList<>();
+        this.persona=null;
+        this.cedula=null;
+        this.totalFactura=0;
     }
     
 }

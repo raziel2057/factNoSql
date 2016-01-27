@@ -35,7 +35,7 @@ and open the template in the editor.
                     
                 </h:panelGrid>
                 
-                <p:dataTable var="detalle" value="#{registroFacturaBean.detalle}"  scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="150"  
+                <p:dataTable var="detalle" value="#{registroFacturaBean.detalle}" rows="10" paginator="true" paginatorPosition="bottom"  scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="150"  
              rowKey="#{materia.codigo}" >
                     
                     <p:column headerText="Codigo">
@@ -53,10 +53,16 @@ and open the template in the editor.
                     </p:column>
 
                 </p:dataTable>
-                <p:commandButton value="Agregar Producto"  immediate="false" update="@form" oncomplete="PF('cliDialog').show()" />
-                <p:commandButton value="Guardar Factura" actionListener="#{registroFacturaBean.guardarFactura()}" immediate="false" update="@form" />
-
                 
+                <h:panelGrid columns="4">
+                     <p:commandButton value="Agregar Producto"  immediate="false" update="@form" oncomplete="PF('cliDialog').show()" />
+                     <p:commandButton value="Guardar Factura" actionListener="#{registroFacturaBean.guardarFactura()}" immediate="false" update="@form" />
+                    <p:outputLabel for="total" value="Total:" />
+                    <p:inputText id="total" value="#{registroFacturaBean.totalFactura}" readonly="true"/>
+                   
+                              
+                    </h:panelGrid>
+               
                 
                 <p:dialog  header="Guardar Productos" widgetVar="cliDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
                     <p:outputPanel id="busDetail" style="text-align:center;">
