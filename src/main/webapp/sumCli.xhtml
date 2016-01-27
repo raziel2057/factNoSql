@@ -16,7 +16,22 @@ and open the template in the editor.
             
             <ui:define name="contenido">
                 
-                
+                <p:dataTable var="persona" value="#{sumarizadoPersonasBean.personas}" rows="10" paginator="true" paginatorPosition="bottom"  scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="300"  
+                             rowKey="#{persona.persona.cedula}" >
+                    
+                    <p:column headerText="Cédula">
+                        <h:outputText value="#{persona.persona.cedula}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{persona.persona.nombre}" />
+                    </p:column>
+                    <p:column headerText="Total compras">
+                        <h:outputText value="#{persona.count}" />
+                    </p:column>
+                    
+
+                </p:dataTable>
                 
             </ui:define>
         </ui:composition>

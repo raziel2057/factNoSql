@@ -9,9 +9,16 @@ import ec.edu.espe.distribuidas.factnosql.modelo.DetalleFactura;
 import ec.edu.espe.distribuidas.factnosql.modelo.Factura;
 import ec.edu.espe.distribuidas.factnosql.modelo.Persona;
 import ec.edu.espe.distribuidas.factnosql.modelo.Sequence;
+import ec.edu.espe.distribuidas.factnosql.modelo.VentasDiarias;
 import ec.edu.espe.distribuidas.factnosql.persistencia.PersistenceManager;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.collections.IteratorUtils;
+import org.mongodb.morphia.aggregation.Accumulator;
+import org.mongodb.morphia.aggregation.Group;
 
 /**
  *
@@ -39,15 +46,26 @@ public class FacturaServicio {
          return seq.getCounter();
       }
     
-    public void guardarFactura(List<DetalleFactura> detalle, Persona persona)
+    public void guardarFactura(List<DetalleFactura> detalle, Persona persona) throws ParseException
     {
         float total =0;
         for(DetalleFactura df:detalle)
         {
             total+=(df.getCantidad()*df.getProducto().getPrecio());
         }
-        
-        this.persistence.context().save(new Factura(this.getNext("factura"), new Date(),total, persona, detalle));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.persistence.context().save(new Factura(this.getNext("factura"),sdf.parse(sdf.format( new Date())),total,persona.getCedula(), persona, detalle));
     }
     
+    public List<VentasDiarias> totalVentasDiarias()
+    {
+        Iterator<VentasDiarias> aggregate = persistence.context().createAggregation(Factura.class)
+                    .group("fechaEmision",Group.grouping("total",Group.sum("total")),Group.grouping("count",new Accumulator("$sum", 1)),Group.grouping("fechaEmision",Group.first("fechaEmision")) )
+                .aggregate(VentasDiarias.class);
+        List<VentasDiarias> totalVentas= IteratorUtils.toList(aggregate);
+        for(VentasDiarias p : totalVentas)
+            System.out.println(p);
+        
+        return totalVentas;
+    }
 }

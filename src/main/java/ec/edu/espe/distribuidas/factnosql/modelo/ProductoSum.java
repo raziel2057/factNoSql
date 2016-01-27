@@ -5,31 +5,27 @@
  */
 package ec.edu.espe.distribuidas.factnosql.modelo;
 
-import java.util.List;
-import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Reference;
+import java.util.Date;
 
 /**
  *
  * @author RAUL
  */
-@Embedded
-public class DetalleFactura {
-    @Reference
-    private Producto producto;
-    private Integer cantidad;
-    private String codigo;
+public class ProductoSum {
+    public Producto producto;
+    public Date fecha;
+    public String codigo;
+    public Integer count;
 
-    public DetalleFactura() {
+    public ProductoSum() {
     }
 
-    public DetalleFactura(Producto producto, Integer cantidad, String codigo) {
+    public ProductoSum(Producto producto, Date fecha, String codigo, Integer count) {
         this.producto = producto;
-        this.cantidad = cantidad;
+        this.fecha = fecha;
         this.codigo = codigo;
+        this.count = count;
     }
-
-    
 
     public Producto getProducto() {
         return producto;
@@ -39,12 +35,12 @@ public class DetalleFactura {
         this.producto = producto;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public String getCodigo() {
@@ -55,12 +51,18 @@ public class DetalleFactura {
         this.codigo = codigo;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
-        return "DetalleFactura{" + "producto=" + producto + ", cantidad=" + cantidad + ", codigo=" + codigo + '}';
+        return "ProductoSum{" + "producto=" + producto + ", fecha=" + fecha + ", codigo=" + codigo + ", count=" + count + '}';
     }
-    
-
     
     
 }

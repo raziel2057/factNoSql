@@ -12,6 +12,7 @@ import ec.edu.espe.distribuidas.factnosql.servicios.FacturaServicio;
 import ec.edu.espe.distribuidas.factnosql.servicios.PersonaServicio;
 import ec.edu.espe.distribuidas.factnosql.servicios.ProductoServicio;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -128,7 +129,7 @@ public class RegistroFacturaBean implements Serializable{
             {
                 if(p.getCodigo().equals(this.codigoProducto))
                 {
-                    this.detalle.add(new DetalleFactura(p, 1));
+                    this.detalle.add(new DetalleFactura(p, 1,p.getCodigo()));
                     this.totalFactura+=p.getPrecio();
                     break;
                 }
@@ -136,7 +137,7 @@ public class RegistroFacturaBean implements Serializable{
         }
     }
     
-    public void guardarFactura()
+    public void guardarFactura() throws ParseException
     {
         this.facturaServicio.guardarFactura(detalle, persona);
         this.reset();

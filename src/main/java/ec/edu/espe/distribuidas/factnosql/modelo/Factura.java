@@ -21,6 +21,7 @@ public class Factura extends BaseEntity {
     private Integer codigo;
     private Date fechaEmision;
     private float total;
+    private String valor;
     
     @Reference
     private Persona persona;
@@ -30,13 +31,16 @@ public class Factura extends BaseEntity {
     public Factura() {
     }
 
-    public Factura(Integer codigo, Date fechaEmision, float total, Persona persona, List<DetalleFactura> detalle) {
+    public Factura(Integer codigo, Date fechaEmision, float total, String valor, Persona persona, List<DetalleFactura> detalle) {
         this.codigo = codigo;
         this.fechaEmision = fechaEmision;
         this.total = total;
+        this.valor = valor;
         this.persona = persona;
         this.detalle = detalle;
     }
+
+    
 
 
 
@@ -79,6 +83,16 @@ public class Factura extends BaseEntity {
     public void setDetalle(List<DetalleFactura> detalle) {
         this.detalle = detalle;
     }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+    
+    
 
     @Override
     public String toString() {

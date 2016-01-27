@@ -16,7 +16,31 @@ and open the template in the editor.
             
             <ui:define name="contenido">
                 
+                <p:outputLabel for="fecha" value="Fecha salida:" />
+                <p:calendar locale="es" id="fecha" value="#{sumarizadoProductosBean.fecha}" pattern="yyyy-MM-dd" 
+                            
+                            requiredMessage="Seleccione la fecha" required="true">
+                </p:calendar>
+                <p:messages for="fecha"/>
                 
+                <p:commandButton value="Buscar" actionListener="#{sumarizadoProductosBean.cargar()}" immediate="false" update="@form" />
+                
+                <p:dataTable  var="producto" value="#{sumarizadoProductosBean.productos}" rows="10" paginator="true" paginatorPosition="bottom"  scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="300"  
+                             rowKey="#{producto.codigo}" >
+                    
+                    <p:column headerText="Código">
+                        <h:outputText value="#{producto.producto.codigo}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{producto.producto.nombre}" />
+                    </p:column>
+                    <p:column headerText="Total ventas">
+                        <h:outputText value="#{producto.count}" />
+                    </p:column>
+                    
+
+                </p:dataTable>
                 
             </ui:define>
         </ui:composition>

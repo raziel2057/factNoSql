@@ -16,7 +16,26 @@ and open the template in the editor.
             
             <ui:define name="contenido">
                 
-                
+                <p:dataTable var="venta" value="#{ventasDiariasBean.ventas}" rows="10" paginator="true" paginatorPosition="bottom"  scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="300"  
+                             rowKey="#{venta.fechaEmision}" >
+                    
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{venta.fechaEmision}">
+                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Total $">
+                        <h:outputText value="#{venta.total}" >
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Total #">
+                        <h:outputText value="#{venta.count}" />
+                    </p:column>
+                    
+
+                </p:dataTable>
                 
             </ui:define>
         </ui:composition>
