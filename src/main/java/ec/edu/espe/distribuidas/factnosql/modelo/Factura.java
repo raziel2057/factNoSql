@@ -8,6 +8,7 @@ package ec.edu.espe.distribuidas.factnosql.modelo;
 import ec.edu.espe.distribuidas.factnosql.persistencia.BaseEntity;
 import java.util.Date;
 import java.util.List;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
@@ -23,19 +24,21 @@ public class Factura extends BaseEntity {
     
     @Reference
     private Persona persona;
-    @Reference
-    private List<Producto> productos;
+    @Embedded
+    private List<DetalleFactura> detalle;
 
     public Factura() {
     }
 
-    public Factura(String codigo, Date fechaEmision, float total, Persona persona, List<Producto> productos) {
+    public Factura(String codigo, Date fechaEmision, float total, Persona persona, List<DetalleFactura> detalle) {
         this.codigo = codigo;
         this.fechaEmision = fechaEmision;
         this.total = total;
         this.persona = persona;
-        this.productos = productos;
+        this.detalle = detalle;
     }
+
+
 
     public String getCodigo() {
         return codigo;
@@ -69,19 +72,21 @@ public class Factura extends BaseEntity {
         this.persona = persona;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public List<DetalleFactura> getDetalle() {
+        return detalle;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setDetalle(List<DetalleFactura> detalle) {
+        this.detalle = detalle;
     }
 
     @Override
     public String toString() {
-        return "Factura{" + "codigo=" + codigo + ", fechaEmision=" + fechaEmision + ", total=" + total + ", persona=" + persona + ", productos=" + productos + '}';
+        return "Factura{" + "codigo=" + codigo + ", fechaEmision=" + fechaEmision + ", total=" + total + ", persona=" + persona + ", detalle=" + detalle + '}';
     }
-    
+
+
+  
     
     
 }
