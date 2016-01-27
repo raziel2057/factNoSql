@@ -8,8 +8,10 @@ package ec.edu.espe.distribuidas.factnosql.web;
 import ec.edu.espe.distribuidas.factnosql.modelo.Persona;
 import ec.edu.espe.distribuidas.factnosql.servicios.PersonaServicio;
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,7 +23,6 @@ public class PersonaBean implements Serializable{
     private PersonaServicio personaServicio;
     private String cedula;
     private Persona persona;
-
     public String getCedula() {
         return cedula;
     }
@@ -38,11 +39,20 @@ public class PersonaBean implements Serializable{
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+
+    public PersonaBean() {
+        
+
+    }
+    
     
     public void buscarPersona()
     {
         this.personaServicio = new PersonaServicio();
         this.persona=this.personaServicio.buscarPersonaPorCedula(cedula);
+
+       
+        
     }
     
 }
