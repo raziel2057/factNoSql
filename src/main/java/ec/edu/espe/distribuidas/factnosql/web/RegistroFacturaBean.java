@@ -8,6 +8,7 @@ package ec.edu.espe.distribuidas.factnosql.web;
 import ec.edu.espe.distribuidas.factnosql.modelo.DetalleFactura;
 import ec.edu.espe.distribuidas.factnosql.modelo.Persona;
 import ec.edu.espe.distribuidas.factnosql.modelo.Producto;
+import ec.edu.espe.distribuidas.factnosql.servicios.FacturaServicio;
 import ec.edu.espe.distribuidas.factnosql.servicios.PersonaServicio;
 import ec.edu.espe.distribuidas.factnosql.servicios.ProductoServicio;
 import java.io.Serializable;
@@ -26,6 +27,7 @@ import javax.faces.bean.ViewScoped;
 public class RegistroFacturaBean implements Serializable{
     private PersonaServicio personaServicio;
     private ProductoServicio productoServicio;
+    private FacturaServicio facturaServicio;
     private String cedula;
     private Persona persona;
     private List<Producto> productos;
@@ -80,6 +82,7 @@ public class RegistroFacturaBean implements Serializable{
     {
         this.personaServicio = new PersonaServicio();
         this.productoServicio = new ProductoServicio();
+        this.facturaServicio = new FacturaServicio();
         detalle=new ArrayList<>();
         this.cargarProductos();
         //this.persona=new Persona();
@@ -123,7 +126,7 @@ public class RegistroFacturaBean implements Serializable{
     
     public void guardarFactura()
     {
-        
+        this.facturaServicio.guardarFactura(detalle, persona);
     }
     
 }

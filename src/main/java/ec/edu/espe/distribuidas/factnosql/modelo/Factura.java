@@ -18,7 +18,7 @@ import org.mongodb.morphia.annotations.Reference;
  */
 @Entity(value="factura")
 public class Factura extends BaseEntity {
-    private String codigo;
+    private Integer codigo;
     private Date fechaEmision;
     private float total;
     
@@ -30,7 +30,7 @@ public class Factura extends BaseEntity {
     public Factura() {
     }
 
-    public Factura(String codigo, Date fechaEmision, float total, Persona persona, List<DetalleFactura> detalle) {
+    public Factura(Integer codigo, Date fechaEmision, float total, Persona persona, List<DetalleFactura> detalle) {
         this.codigo = codigo;
         this.fechaEmision = fechaEmision;
         this.total = total;
@@ -40,11 +40,11 @@ public class Factura extends BaseEntity {
 
 
 
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 
