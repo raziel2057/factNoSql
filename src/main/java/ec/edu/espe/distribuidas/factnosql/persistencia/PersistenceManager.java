@@ -18,11 +18,9 @@ public class PersistenceManager {
 		MongoClientOptions.builder().socketTimeout(60000).connectTimeout(60000).build();
 		
 		try
-		{
-			
-			mongoClient = new MongoClient(new ServerAddress("localhost"),mongoOptions);
-			
-		}
+		{	
+                    mongoClient = new MongoClient(new ServerAddress("localhost"),mongoOptions);
+                }
 		catch(Exception e)
 		{
 			

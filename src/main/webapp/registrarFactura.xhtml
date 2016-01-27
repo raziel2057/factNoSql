@@ -16,7 +16,67 @@ and open the template in the editor.
             
             <ui:define name="contenido">
                 
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="cedulaPersonaB" value="Cedula:" />
+                    <p:inputText tabindex="1" id="cedulaPersonaB" value="#{registroFacturaBean.cedula}" required="true" requiredMessage="Ingrese la cedula" />
+                    <p:commandButton id="buscarPersona" immediate="false" value="Buscar" 
+                                     actionListener="#{registroFacturaBean.buscarPersona()}" update="@form" 
+                                 />
+                    </h:panelGrid>
+                <h:panelGrid columns="4" rendered="#{!(registroFacturaBean.persona eq null)}">
+                    <p:outputLabel for="cedulaPersona" value="Cedula:" />
+                    <p:inputText id="cedulaPersona" value="#{registroFacturaBean.persona.cedula}" readonly="true"  />
+                    <p:outputLabel for="nombrePersona" value="Nombre:" />
+                    <p:inputText id="nombrePersona" value="#{registroFacturaBean.persona.nombre}" readonly="true"  />
+                    <p:outputLabel for="direccionPersona" value="Dirección:" />
+                    <p:inputText id="direccionPersona" value="#{registroFacturaBean.persona.direccion}" readonly="true"  />
+                    <p:outputLabel for="telefonoPersona" value="Teléfono:" />
+                    <p:inputText id="telefonoPersona" value="#{registroFacturaBean.persona.telefono}" readonly="true"  />
+                    
+                </h:panelGrid>
                 
+                <p:dataTable var="detalle" value="#{registroFacturaBean.detalle}"  scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="150"  
+             rowKey="#{materia.codigo}" >
+                    
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{detalle.producto.codigo}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{detalle.producto.nombre}" />
+                    </p:column>
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{detalle.producto.precio}" />
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{detalle.cantidad}" />
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton value="Agregar Producto"  immediate="false" update="@form" oncomplete="PF('cliDialog').show()" />
+                <p:commandButton value="Guardar Factura" actionListener="#{registroFacturaBean.guardarFactura()}" immediate="false" update="@form" />
+
+                
+                
+                <p:dialog  header="Guardar Productos" widgetVar="cliDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+                    <p:outputPanel id="busDetail" style="text-align:center;">
+                        <p:panelGrid  columns="3"  columnClasses="label,value">
+
+
+                            <p:outputLabel for="productos" value="Producto:" />
+                            <p:selectOneMenu id="productos" value="#{registroFacturaBean.codigoProducto}" style="width:200px" requiredMessage="Seleccione un producto  "
+                                                 required="true" label="tipo">
+                                <f:selectItems value="#{registroFacturaBean.productos}" var="producto" itemLabel="#{producto.nombre}" itemValue="#{producto.codigo}" />
+
+                            </p:selectOneMenu>
+                            <p:message for="productos" />
+
+                            <p:spacer />
+                            <p:commandButton value="Guardar" actionListener="#{registroFacturaBean.agregarDetalle()}"  immediate="false" update="@form"/>
+                        </p:panelGrid>
+
+                    </p:outputPanel>
+                </p:dialog>
                 
             </ui:define>
         </ui:composition>
