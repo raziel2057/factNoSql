@@ -13,7 +13,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
 /**
- *
+ *jjlhk
  * @author RAUL
  */
 @Entity(value="factura")
