@@ -10,27 +10,14 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-
+ 
     <h:body>
         <ui:composition template="/plantillas/template.xhtml">
-
+            
             <ui:define name="contenido">
-
-                <div> <h2> Ventas diarias </h2> </div>
-
-                <p:dataTable var="dia" value="#{ventasDiariasBean.listaVentasDiarias}"   >
-                    <p:ajax event="rowSelect"  update="@form"/>
-
-                    <p:column headerText="Fecha">
-                        <h:outputText value="#{dia.fecha}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column headerText="Monto vendido">
-                        <h:outputText value="#{dia.count}" />
-                    </p:column>
-                </p:dataTable>
+                
+                
+                
             </ui:define>
         </ui:composition>
     </h:body>

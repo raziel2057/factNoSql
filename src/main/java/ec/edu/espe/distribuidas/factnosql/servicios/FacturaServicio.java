@@ -5,21 +5,13 @@
  */
 package ec.edu.espe.distribuidas.factnosql.servicios;
 
-import ec.edu.espe.distribuidas.factnosql.modelo.CountResult;
 import ec.edu.espe.distribuidas.factnosql.modelo.DetalleFactura;
 import ec.edu.espe.distribuidas.factnosql.modelo.Factura;
 import ec.edu.espe.distribuidas.factnosql.modelo.Persona;
 import ec.edu.espe.distribuidas.factnosql.modelo.Sequence;
 import ec.edu.espe.distribuidas.factnosql.persistencia.PersistenceManager;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import org.mongodb.morphia.aggregation.Accumulator;
-import static org.mongodb.morphia.aggregation.Group.grouping;
-import org.mongodb.morphia.aggregation.Sort;
-import org.mongodb.morphia.query.Query;
 
 /**
  *
@@ -54,36 +46,8 @@ public class FacturaServicio {
         {
             total+=(df.getCantidad()*df.getProducto().getPrecio());
         }
-        Date fechaActual = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fechaActual);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        this.persistence.context().save(new Factura(this.getNext("factura"), calendar.getTime(),total, persona, detalle));
-    }
-    
-    
-    
-    public List<CountResult> totalFacturasDiarias()
-    {
-        Iterator<CountResult> aggregation = persistence.context().
-                createAggregation(Factura.class)
-                .group("fechaEmision", grouping("count", new Accumulator("$sum", "total")))
-                .sort(Sort.ascending("_id"))
-                .aggregate(CountResult.class);
-
-        List<CountResult> lista= new ArrayList<>();
-        CountResult result1;
-        while (aggregation.hasNext()) {
-            result1 = aggregation.next();
-            lista.add(result1);
-        }
         
-        return lista;
+        this.persistence.context().save(new Factura(this.getNext("factura"), new Date(),total, persona, detalle));
     }
-    
-    
     
 }
